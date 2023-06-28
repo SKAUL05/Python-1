@@ -3,11 +3,7 @@
 
 def __encryptPart(messagePart, character2Number):
     one, two, three = "", "", ""
-    tmp = []
-
-    for character in messagePart:
-        tmp.append(character2Number[character])
-
+    tmp = [character2Number[character] for character in messagePart]
     for each in tmp:
         one += each[0]
         two += each[1]
@@ -99,22 +95,15 @@ def encryptMessage(message, alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ.", period=5):
 def decryptMessage(message, alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ.", period=5):
     message, alphabet, character2Number, number2Character = __prepare(message, alphabet)
     decrypted_numeric = []
-    decrypted = ""
-
     for i in range(0, len(message) + 1, period):
         a, b, c = __decryptPart(message[i : i + period], character2Number)
 
-        for j in range(0, len(a)):
-            decrypted_numeric.append(a[j] + b[j] + c[j])
-
-    for each in decrypted_numeric:
-        decrypted += number2Character[each]
-
-    return decrypted
+        decrypted_numeric.extend(a[j] + b[j] + c[j] for j in range(0, len(a)))
+    return "".join(number2Character[each] for each in decrypted_numeric)
 
 
 if __name__ == "__main__":
     msg = "DEFEND THE EAST WALL OF THE CASTLE."
     encrypted = encryptMessage(msg, "EPSDUCVWYM.ZLKXNBTFGORIJHAQ")
     decrypted = decryptMessage(encrypted, "EPSDUCVWYM.ZLKXNBTFGORIJHAQ")
-    print("Encrypted: {}\nDecrypted: {}".format(encrypted, decrypted))
+    print(f"Encrypted: {encrypted}\nDecrypted: {decrypted}")

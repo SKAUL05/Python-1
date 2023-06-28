@@ -39,10 +39,7 @@ def sentinel_linear_search(sequence, target):
 
     sequence.pop()
 
-    if index == len(sequence):
-        return None
-
-    return index
+    return None if index == len(sequence) else index
 
 
 if __name__ == "__main__":
@@ -53,6 +50,6 @@ if __name__ == "__main__":
     target = int(target_input)
     result = sentinel_linear_search(sequence, target)
     if result is not None:
-        print("{} found at positions: {}".format(target, result))
+        print(f"{target} found at positions: {result}")
     else:
         print("Not found")

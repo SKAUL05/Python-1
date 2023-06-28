@@ -143,8 +143,7 @@ if __name__ == "__main__":
     # make a copy of grid so that you can compare with the unmodified grid
     for grid in (initial_grid, no_solution):
         grid = list(map(list, grid))
-        solution = sudoku(grid)
-        if solution:
+        if solution := sudoku(grid):
             print("grid after solving:")
             print_solution(solution)
         else:

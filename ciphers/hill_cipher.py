@@ -42,9 +42,7 @@ import numpy
 
 
 def gcd(a, b):
-    if a == 0:
-        return b
-    return gcd(b % a, a)
+    return b if a == 0 else gcd(b % a, a)
 
 
 class HillCipher:
@@ -114,12 +112,14 @@ class HillCipher:
 
         if det < 0:
             det = det % len(self.key_string)
-        det_inv = None
-        for i in range(len(self.key_string)):
-            if (det * i) % len(self.key_string) == 1:
-                det_inv = i
-                break
-
+        det_inv = next(
+            (
+                i
+                for i in range(len(self.key_string))
+                if (det * i) % len(self.key_string) == 1
+            ),
+            None,
+        )
         inv_key = (
             det_inv
             * numpy.linalg.det(self.encrypt_key)
@@ -151,7 +151,7 @@ def main():
     hill_matrix = []
 
     print("Enter each row of the encryption key with space separated integers")
-    for i in range(N):
+    for _ in range(N):
         row = list(map(int, input().split()))
         hill_matrix.append(row)
 

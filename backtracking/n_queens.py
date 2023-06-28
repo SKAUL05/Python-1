@@ -32,10 +32,10 @@ def isSafe(board, row, column):
     for i, j in zip(range(row, -1, -1), range(column, -1, -1)):
         if board[i][j] == 1:
             return False
-    for i, j in zip(range(row, -1, -1), range(column, len(board))):
-        if board[i][j] == 1:
-            return False
-    return True
+    return all(
+        board[i][j] != 1
+        for i, j in zip(range(row, -1, -1), range(column, len(board)))
+    )
 
 
 def solve(board, row):
@@ -83,6 +83,6 @@ def printboard(board):
 
 # n=int(input("The no. of queens"))
 n = 8
-board = [[0 for i in range(n)] for j in range(n)]
+board = [[0 for _ in range(n)] for _ in range(n)]
 solve(board, 0)
 print("The total no. of solutions are :", len(solution))

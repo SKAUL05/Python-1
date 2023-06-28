@@ -51,11 +51,7 @@ def extended_euclidean_algorithm(m, n):
         b = t - q * b
 
     pair = None
-    if m > n:
-        pair = (a, b)
-    else:
-        pair = (b, a)
-    return pair
+    return (a, b) if m > n else (b, a)
 
 
 def main():

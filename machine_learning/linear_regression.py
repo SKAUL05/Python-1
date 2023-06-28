@@ -27,8 +27,7 @@ def collect_dataset():
         item = item.split(",")
         data.append(item)
     data.pop(0)  # This is for removing the labels from the list
-    dataset = np.matrix(data)
-    return dataset
+    return np.matrix(data)
 
 
 def run_steep_gradient_descent(data_x, data_y, len_data, alpha, theta):
@@ -61,8 +60,7 @@ def sum_of_square_error(data_x, data_y, len_data, theta):
     prod = np.dot(theta, data_x.transpose())
     prod -= data_y.transpose()
     sum_elem = np.sum(np.square(prod))
-    error = sum_elem / (2 * len_data)
-    return error
+    return sum_elem / (2 * len_data)
 
 
 def run_linear_regression(data_x, data_y):

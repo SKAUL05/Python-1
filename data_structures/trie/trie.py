@@ -8,7 +8,7 @@ lookup time making it an optimal approach when space is not an issue.
 
 class TrieNode:
     def __init__(self):
-        self.nodes = dict()  # Mapping from char to TrieNode
+        self.nodes = {}
         self.is_leaf = False
 
     def insert_many(self, words: [str]):
@@ -109,7 +109,7 @@ def test_trie():
 
 
 def print_results(msg: str, passes: bool) -> None:
-    print(str(msg), "works!" if passes else "doesn't work :(")
+    print(msg, "works!" if passes else "doesn't work :(")
 
 
 def pytests():

@@ -12,11 +12,7 @@ import numpy as np
 
 def psnr(original, contrast):
     mse = np.mean((original - contrast) ** 2)
-    if mse == 0:
-        return 100
-    PIXEL_MAX = 255.0
-    PSNR = 20 * math.log10(PIXEL_MAX / math.sqrt(mse))
-    return PSNR
+    return 100 if mse == 0 else 20 * math.log10(255.0 / math.sqrt(mse))
 
 
 def main():

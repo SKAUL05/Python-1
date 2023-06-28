@@ -11,7 +11,7 @@ def find_lcm(first_num: int, second_num: int) -> int:
        >>> find_lcm(12,76)
        228
     """
-    max_num = first_num if first_num >= second_num else second_num
+    max_num = max(first_num, second_num)
     common_mult = max_num
     while (common_mult % first_num > 0) or (common_mult % second_num > 0):
         common_mult += max_num

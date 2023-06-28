@@ -8,7 +8,7 @@
 
 
 def generate_all_permutations(sequence):
-    create_state_space_tree(sequence, [], 0, [0 for i in range(len(sequence))])
+    create_state_space_tree(sequence, [], 0, [0 for _ in range(len(sequence))])
 
 
 def create_state_space_tree(sequence, current_sequence, index, index_used):

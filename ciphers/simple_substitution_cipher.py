@@ -21,9 +21,8 @@ def main():
 
 
 def checkValidKey(key):
-    keyList = list(key)
     lettersList = list(LETTERS)
-    keyList.sort()
+    keyList = sorted(key)
     lettersList.sort()
 
     if keyList != lettersList:

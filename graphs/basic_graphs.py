@@ -2,11 +2,7 @@ if __name__ == "__main__":
     # Accept No. of Nodes and edges
     n, m = map(int, input().split(" "))
 
-    # Initialising Dictionary of edges
-    g = {}
-    for i in range(n):
-        g[i + 1] = []
-
+    g = {i + 1: [] for i in range(n)}
     """
     ----------------------------------------------------------------------------
         Accepting edges of Unweighted Directed Graphs
@@ -48,7 +44,7 @@ if __name__ == "__main__":
 
 
 def dfs(G, s):
-    vis, S = set([s]), [s]
+    vis, S = {s}, [s]
     print(s)
     while S:
         flag = 0
@@ -76,7 +72,7 @@ from collections import deque
 
 
 def bfs(G, s):
-    vis, Q = set([s]), deque([s])
+    vis, Q = {s}, deque([s])
     print(s)
     while Q:
         u = Q.popleft()
@@ -160,9 +156,7 @@ def topo(G, ind=None, Q=None):
 
 def adjm():
     n = input().strip()
-    a = []
-    for i in range(n):
-        a.append(map(int, input().strip().split()))
+    a = [map(int, input().strip().split()) for _ in range(n)]
     return a, n
 
 
@@ -182,7 +176,7 @@ def adjm():
 def floy(A_and_n):
     (A, n) = A_and_n
     dist = list(A)
-    path = [[0] * n for i in range(n)]
+    path = [[0] * n for _ in range(n)]
     for k in range(n):
         for i in range(n):
             for j in range(n):
@@ -235,9 +229,7 @@ def prim(G, s):
 
 def edglist():
     n, m = map(int, input().split(" "))
-    l = []
-    for i in range(m):
-        l.append(map(int, input().split(" ")))
+    l = [map(int, input().split(" ")) for _ in range(m)]
     return l, n
 
 
@@ -255,7 +247,7 @@ def krusk(E_and_n):
     # Sort edges on the basis of distance
     (E, n) = E_and_n
     E.sort(reverse=True, key=lambda x: x[2])
-    s = [set([i]) for i in range(1, n + 1)]
+    s = [{i} for i in range(1, n + 1)]
     while True:
         if len(s) == 1:
             break
@@ -275,8 +267,4 @@ def krusk(E_and_n):
 
 # find the isolated node in the graph
 def find_isolated_nodes(graph):
-    isolated = []
-    for node in graph:
-        if not graph[node]:
-            isolated.append(node)
-    return isolated
+    return [node for node in graph if not graph[node]]

@@ -26,10 +26,10 @@ def parse_file(file_path):
     chars = {}
     with open(file_path) as f:
         while True:
-            c = f.read(1)
-            if not c:
+            if c := f.read(1):
+                chars[c] = chars[c] + 1 if c in chars else 1
+            else:
                 break
-            chars[c] = chars[c] + 1 if c in chars.keys() else 1
     return sorted([Letter(c, f) for c, f in chars.items()], key=lambda l: l.freq)
 
 
@@ -57,8 +57,8 @@ def traverse_tree(root, bitstring):
         root.bitstring = bitstring
         return [root]
     letters = []
-    letters += traverse_tree(root.left, bitstring + "0")
-    letters += traverse_tree(root.right, bitstring + "1")
+    letters += traverse_tree(root.left, f"{bitstring}0")
+    letters += traverse_tree(root.right, f"{bitstring}1")
     return letters
 
 

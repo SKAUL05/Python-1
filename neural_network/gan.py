@@ -15,8 +15,7 @@ def ReLu(x):
 
 
 def d_ReLu(x):
-    mask = (x > 0) * 1.0
-    return mask
+    return (x > 0) * 1.0
 
 
 def arctan(x):

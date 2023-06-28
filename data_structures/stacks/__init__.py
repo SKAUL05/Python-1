@@ -17,6 +17,5 @@ class Stack:
     def pop(self):
         if self.is_empty():
             return None
-        else:
-            self.top -= 1
-            return self.stack[self.top]
+        self.top -= 1
+        return self.stack[self.top]

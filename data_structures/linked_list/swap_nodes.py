@@ -26,32 +26,31 @@ class Linkedlist:
         prevD2 = None
         if d1 == d2:
             return
-        else:
-            # find d1
-            D1 = self.head
-            while D1 is not None and D1.data != d1:
-                prevD1 = D1
-                D1 = D1.next
-                # find d2
-            D2 = self.head
-            while D2 is not None and D2.data != d2:
-                prevD2 = D2
-                D2 = D2.next
-            if D1 is None and D2 is None:
-                return
+        # find d1
+        D1 = self.head
+        while D1 is not None and D1.data != d1:
+            prevD1 = D1
+            D1 = D1.next
+            # find d2
+        D2 = self.head
+        while D2 is not None and D2.data != d2:
+            prevD2 = D2
+            D2 = D2.next
+        if D1 is None and D2 is None:
+            return
             # if D1 is head
-            if prevD1 is not None:
-                prevD1.next = D2
-            else:
-                self.head = D2
-            # if D2 is head
-            if prevD2 is not None:
-                prevD2.next = D1
-            else:
-                self.head = D1
-            temp = D1.next
-            D1.next = D2.next
-            D2.next = temp
+        if prevD1 is None:
+            self.head = D2
+        else:
+            prevD1.next = D2
+        # if D2 is head
+        if prevD2 is not None:
+            prevD2.next = D1
+        else:
+            self.head = D1
+        temp = D1.next
+        D1.next = D2.next
+        D2.next = temp
 
 
 # swapping code ends here

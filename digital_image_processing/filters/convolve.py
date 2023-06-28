@@ -32,9 +32,7 @@ def img_convolve(image, filter_kernel):
 
     #  turn the kernel into shape(k*k, 1)
     kernel_array = ravel(filter_kernel)
-    # reshape and get the dst image
-    dst = dot(image_array, kernel_array).reshape(height, width)
-    return dst
+    return dot(image_array, kernel_array).reshape(height, width)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
 # Kahn's Algorithm is used to find Topological ordering of Directed Acyclic Graph using BFS
 def topologicalSort(l):
     indegree = [0] * len(l)
-    queue = []
     topo = []
     cnt = 0
 
@@ -9,10 +8,7 @@ def topologicalSort(l):
         for i in values:
             indegree[i] += 1
 
-    for i in range(len(indegree)):
-        if indegree[i] == 0:
-            queue.append(i)
-
+    queue = [i for i in range(len(indegree)) if indegree[i] == 0]
     while queue:
         vertex = queue.pop(0)
         cnt += 1

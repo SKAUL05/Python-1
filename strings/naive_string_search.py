@@ -14,11 +14,7 @@ def naivePatternSearch(mainString, pattern):
     strLen = len(mainString)
     position = []
     for i in range(strLen - patLen + 1):
-        match_found = True
-        for j in range(patLen):
-            if mainString[i + j] != pattern[j]:
-                match_found = False
-                break
+        match_found = all(mainString[i + j] == pattern[j] for j in range(patLen))
         if match_found:
             position.append(i)
     return position

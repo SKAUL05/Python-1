@@ -65,9 +65,9 @@ def decimal_to_hexadecimal(decimal):
     while decimal > 0:
         decimal, remainder = divmod(decimal, 16)
         hexadecimal = values[remainder] + hexadecimal
-    hexadecimal = "0x" + hexadecimal
+    hexadecimal = f"0x{hexadecimal}"
     if negative:
-        hexadecimal = "-" + hexadecimal
+        hexadecimal = f"-{hexadecimal}"
     return hexadecimal
 
 

@@ -30,8 +30,8 @@ def generateKey(keySize):
 
 
 def makeKeyFiles(name, keySize):
-    if os.path.exists("%s_pubkey.txt" % (name)) or os.path.exists(
-        "%s_privkey.txt" % (name)
+    if os.path.exists(f"{name}_pubkey.txt") or os.path.exists(
+        f"{name}_privkey.txt"
     ):
         print("\nWARNING:")
         print(
@@ -42,12 +42,12 @@ def makeKeyFiles(name, keySize):
 
     publicKey, privateKey = generateKey(keySize)
     print("\nWriting public key to file %s_pubkey.txt..." % name)
-    with open("%s_pubkey.txt" % name, "w") as fo:
-        fo.write("%s,%s,%s" % (keySize, publicKey[0], publicKey[1]))
+    with open(f"{name}_pubkey.txt", "w") as fo:
+        fo.write(f"{keySize},{publicKey[0]},{publicKey[1]}")
 
-    print("Writing private key to file %s_privkey.txt..." % name)
-    with open("%s_privkey.txt" % name, "w") as fo:
-        fo.write("%s,%s,%s" % (keySize, privateKey[0], privateKey[1]))
+    print(f"Writing private key to file {name}_privkey.txt...")
+    with open(f"{name}_privkey.txt", "w") as fo:
+        fo.write(f"{keySize},{privateKey[0]},{privateKey[1]}")
 
 
 if __name__ == "__main__":

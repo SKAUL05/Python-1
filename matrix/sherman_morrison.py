@@ -18,7 +18,7 @@ class Matrix:
         """
 
         self.row, self.column = row, column
-        self.array = [[default_value for c in range(column)] for r in range(row)]
+        self.array = [[default_value for _ in range(column)] for _ in range(row)]
 
     def __str__(self):
         """
@@ -175,9 +175,7 @@ class Matrix:
                         result[r, c] += self[r, i] * another[i, c]
             return result
         else:
-            raise TypeError(
-                "Unsupported type given for another (%s)" % (type(another),)
-            )
+            raise TypeError(f"Unsupported type given for another ({type(another)})")
 
     def transpose(self):
         """
@@ -248,17 +246,17 @@ if __name__ == "__main__":
         ainv = Matrix(3, 3, 0)
         for i in range(3):
             ainv[i, i] = 1
-        print("a^(-1) is %s" % (ainv,))
+        print(f"a^(-1) is {ainv}")
         # u, v
         u = Matrix(3, 1, 0)
         u[0, 0], u[1, 0], u[2, 0] = 1, 2, -3
         v = Matrix(3, 1, 0)
         v[0, 0], v[1, 0], v[2, 0] = 4, -2, 5
-        print("u is %s" % (u,))
-        print("v is %s" % (v,))
-        print("uv^T is %s" % (u * v.transpose()))
+        print(f"u is {u}")
+        print(f"v is {v}")
+        print(f"uv^T is {u * v.transpose()}")
         # Sherman Morrison
-        print("(a + uv^T)^(-1) is %s" % (ainv.ShermanMorrison(u, v),))
+        print(f"(a + uv^T)^(-1) is {ainv.ShermanMorrison(u, v)}")
 
     def test2():
         import doctest

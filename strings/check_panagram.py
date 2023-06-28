@@ -13,15 +13,13 @@ def check_panagram(
     >>> check_panagram("The quick brown fox jumps over the la_y dog")
     False
     """
-    frequency = set()
     input_str = input_str.replace(
         " ", ""
     )  # Replacing all the Whitespaces in our sentence
-    for alpha in input_str:
-        if "a" <= alpha.lower() <= "z":
-            frequency.add(alpha.lower())
-
-    return True if len(frequency) == 26 else False
+    frequency = {
+        alpha.lower() for alpha in input_str if "a" <= alpha.lower() <= "z"
+    }
+    return len(frequency) == 26
 
 
 if __name__ == "main":

@@ -4,11 +4,9 @@ import math
 class SegmentTree:
     def __init__(self, N):
         self.N = N
-        self.st = [
-            0 for i in range(0, 4 * N)
-        ]  # approximate the overall size of segment tree with array N
-        self.lazy = [0 for i in range(0, 4 * N)]  # create array to store lazy update
-        self.flag = [0 for i in range(0, 4 * N)]  # flag for lazy update
+        self.st = [0 for _ in range(0, 4 * N)]
+        self.lazy = [0 for _ in range(0, 4 * N)]
+        self.flag = [0 for _ in range(0, 4 * N)]
 
     def left(self, idx):
         return idx * 2
@@ -74,9 +72,7 @@ class SegmentTree:
         return max(q1, q2)
 
     def showData(self):
-        showList = []
-        for i in range(1, N + 1):
-            showList += [self.query(1, 1, self.N, i, i)]
+        showList = [self.query(1, 1, self.N, i, i) for i in range(1, N + 1)]
         print(showList)
 
 

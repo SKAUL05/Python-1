@@ -19,7 +19,7 @@ class HashTable:
         return self._keys
 
     def balanced_factor(self):
-        return sum([1 for slot in self.values if slot is not None]) / (
+        return sum(1 for slot in self.values if slot is not None) / (
             self.size_table * self.charge_factor
         )
 
@@ -29,16 +29,14 @@ class HashTable:
     def _step_by_step(self, step_ord):
 
         print("step {0}".format(step_ord))
-        print([i for i in range(len(self.values))])
+        print(list(range(len(self.values))))
         print(self.values)
 
     def bulk_insert(self, values):
-        i = 1
         self.__aux_list = values
-        for value in values:
+        for i, value in enumerate(values, start=1):
             self.insert_data(value)
             self._step_by_step(i)
-            i += 1
 
     def _set_value(self, key, data):
         self.values[key] = data
@@ -70,10 +68,7 @@ class HashTable:
         if self.values[key] is None:
             self._set_value(key, data)
 
-        elif self.values[key] == data:
-            pass
-
-        else:
+        elif self.values[key] != data:
             colision_resolution = self._colision_resolution(key, data)
             if colision_resolution is not None:
                 self._set_value(colision_resolution, data)

@@ -7,7 +7,7 @@ def radix_sort(lst):
 
     while placement < max_digit:
         # declare and initialize buckets
-        buckets = [list() for _ in range(RADIX)]
+        buckets = [[] for _ in range(RADIX)]
 
         # split lst between lists
         for i in lst:

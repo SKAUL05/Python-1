@@ -110,9 +110,7 @@ def _extract_labels(f, one_hot=False, num_classes=10):
         num_items = _read32(bytestream)
         buf = bytestream.read(num_items)
         labels = numpy.frombuffer(buf, dtype=numpy.uint8)
-        if one_hot:
-            return _dense_to_one_hot(labels, num_classes)
-        return labels
+        return _dense_to_one_hot(labels, num_classes) if one_hot else labels
 
 
 class _DataSet(object):
@@ -165,7 +163,7 @@ class _DataSet(object):
         else:
             assert (
                 images.shape[0] == labels.shape[0]
-            ), "images.shape: %s labels.shape: %s" % (images.shape, labels.shape)
+            ), f"images.shape: {images.shape} labels.shape: {labels.shape}"
             self._num_examples = images.shape[0]
 
             # Convert shape from [num examples, rows, columns, depth]
@@ -204,10 +202,7 @@ class _DataSet(object):
         """Return the next `batch_size` examples from this data set."""
         if fake_data:
             fake_image = [1] * 784
-            if self.one_hot:
-                fake_label = [1] + [0] * 9
-            else:
-                fake_label = 0
+            fake_label = [1] + [0] * 9 if self.one_hot else 0
             return (
                 [fake_image for _ in xrange(batch_size)],
                 [fake_label for _ in xrange(batch_size)],
