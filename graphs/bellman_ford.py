@@ -9,10 +9,10 @@ def printDist(dist, V):
 
 
 def BellmanFord(graph, V, E, src):
-    mdist = [float("inf") for i in range(V)]
+    mdist = [float("inf") for _ in range(V)]
     mdist[src] = 0.0
 
-    for i in range(V - 1):
+    for _ in range(V - 1):
         for j in range(E):
             u = graph[j]["src"]
             v = graph[j]["dst"]
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     V = int(input("Enter number of vertices: ").strip())
     E = int(input("Enter number of edges: ").strip())
 
-    graph = [dict() for j in range(E)]
+    graph = [{} for _ in range(E)]
 
     for i in range(V):
         graph[i][i] = 0.0

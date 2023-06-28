@@ -92,9 +92,7 @@ class Vector(object):
         """
             returns the euclidean length of the vector
         """
-        summe = 0
-        for c in self.__components:
-            summe += c ** 2
+        summe = sum(c ** 2 for c in self.__components)
         return math.sqrt(summe)
 
     def __add__(self, other):
@@ -128,15 +126,12 @@ class Vector(object):
             mul implements the scalar multiplication 
             and the dot-product
         """
-        if isinstance(other, float) or isinstance(other, int):
+        if isinstance(other, (float, int)):
             ans = [c * other for c in self.__components]
             return Vector(ans)
         elif isinstance(other, Vector) and (len(self) == len(other)):
             size = len(self)
-            summe = 0
-            for i in range(size):
-                summe += self.__components[i] * other.component(i)
-            return summe
+            return sum(self.__components[i] * other.component(i) for i in range(size))
         else:  # error case
             raise Exception("invalid operand!")
 
@@ -188,7 +183,7 @@ def axpy(scalar, x, y):
     assert (
         isinstance(x, Vector)
         and (isinstance(y, Vector))
-        and (isinstance(scalar, int) or isinstance(scalar, float))
+        and (isinstance(scalar, (int, float)))
     )
     return x * scalar + y
 
@@ -201,7 +196,7 @@ def randomVector(N, a, b):
                 random integer components between 'a' and 'b'.
     """
     random.seed(None)
-    ans = [random.randint(a, b) for i in range(N)]
+    ans = [random.randint(a, b) for _ in range(N)]
     return Vector(ans)
 
 
@@ -242,7 +237,7 @@ class Matrix(object):
             ans += "|"
             for j in range(self.__width):
                 if j < self.__width - 1:
-                    ans += str(self.__matrix[i][j]) + ","
+                    ans += f"{str(self.__matrix[i][j])},"
                 else:
                     ans += str(self.__matrix[i][j]) + "|\n"
         return ans
@@ -310,21 +305,21 @@ class Matrix(object):
             implements the matrix-scalar multiplication
         """
         if isinstance(other, Vector):  # vector-matrix
-            if len(other) == self.__width:
-                ans = zeroVector(self.__height)
-                for i in range(self.__height):
-                    summe = 0
-                    for j in range(self.__width):
-                        summe += other.component(j) * self.__matrix[i][j]
-                    ans.changeComponent(i, summe)
-                    summe = 0
-                return ans
-            else:
+            if len(other) != self.__width:
                 raise Exception(
                     "vector must have the same size as the "
                     + "number of columns of the matrix!"
                 )
-        elif isinstance(other, int) or isinstance(other, float):  # matrix-scalar
+            ans = zeroVector(self.__height)
+            for i in range(self.__height):
+                summe = sum(
+                    other.component(j) * self.__matrix[i][j]
+                    for j in range(self.__width)
+                )
+                ans.changeComponent(i, summe)
+                summe = 0
+            return ans
+        elif isinstance(other, (int, float)):  # matrix-scalar
             matrix = [
                 [self.__matrix[i][j] * other for j in range(self.__width)]
                 for i in range(self.__height)
@@ -335,38 +330,38 @@ class Matrix(object):
         """
             implements the matrix-addition.
         """
-        if self.__width == other.width() and self.__height == other.height():
-            matrix = []
-            for i in range(self.__height):
-                row = []
-                for j in range(self.__width):
-                    row.append(self.__matrix[i][j] + other.component(i, j))
-                matrix.append(row)
-            return Matrix(matrix, self.__width, self.__height)
-        else:
+        if self.__width != other.width() or self.__height != other.height():
             raise Exception("matrix must have the same dimension!")
+        matrix = []
+        for i in range(self.__height):
+            row = [
+                self.__matrix[i][j] + other.component(i, j)
+                for j in range(self.__width)
+            ]
+            matrix.append(row)
+        return Matrix(matrix, self.__width, self.__height)
 
     def __sub__(self, other):
         """
             implements the matrix-subtraction.
         """
-        if self.__width == other.width() and self.__height == other.height():
-            matrix = []
-            for i in range(self.__height):
-                row = []
-                for j in range(self.__width):
-                    row.append(self.__matrix[i][j] - other.component(i, j))
-                matrix.append(row)
-            return Matrix(matrix, self.__width, self.__height)
-        else:
+        if self.__width != other.width() or self.__height != other.height():
             raise Exception("matrix must have the same dimension!")
+        matrix = []
+        for i in range(self.__height):
+            row = [
+                self.__matrix[i][j] - other.component(i, j)
+                for j in range(self.__width)
+            ]
+            matrix.append(row)
+        return Matrix(matrix, self.__width, self.__height)
 
 
 def squareZeroMatrix(N):
     """
         returns a square zero-matrix of dimension NxN
     """
-    ans = [[0] * N for i in range(N)]
+    ans = [[0] * N for _ in range(N)]
     return Matrix(ans, N, N)
 
 
@@ -376,5 +371,5 @@ def randomMatrix(W, H, a, b):
         between 'a' and 'b'
     """
     random.seed(None)
-    matrix = [[random.randint(a, b) for j in range(W)] for i in range(H)]
+    matrix = [[random.randint(a, b) for _ in range(W)] for _ in range(H)]
     return Matrix(matrix, W, H)

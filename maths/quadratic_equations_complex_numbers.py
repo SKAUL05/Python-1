@@ -14,7 +14,7 @@ def QuadraticEquation(a: int, b: int, c: int) -> Tuple[str, str]:
     """
     if a == 0:
         raise ValueError("Coefficient 'a' must not be zero for quadratic equations.")
-    delta = b * b - 4 * a * c
+    delta = b**2 - 4 * a * c
     if delta >= 0:
         return str((-b + sqrt(delta)) / (2 * a)), str((-b - sqrt(delta)) / (2 * a))
     """

@@ -12,7 +12,8 @@ You are given a(10^6) = 31054319.
 Find a(10^15)
 """
 
-ks = [k for k in range(2, 20 + 1)]
+
+ks = list(range(2, 20 + 1))
 base = [10 ** k for k in range(ks[-1] + 1)]
 memo = {}
 
@@ -52,17 +53,22 @@ def next_term(a_i, k, i, n):
 
     sub_memo = memo.get(ds_b)
 
-    if sub_memo != None:
+    if sub_memo is None:
+        sub_memo = {c: []}
+        memo[ds_b] = sub_memo
+
+    else:
         jumps = sub_memo.get(c)
 
         if jumps != None and len(jumps) > 0:
-            # find and make the largest jump without going over
-            max_jump = -1
-            for _k in range(len(jumps) - 1, -1, -1):
-                if jumps[_k][2] <= k and jumps[_k][1] <= max_dn:
-                    max_jump = _k
-                    break
-
+            max_jump = next(
+                (
+                    _k
+                    for _k in range(len(jumps) - 1, -1, -1)
+                    if jumps[_k][2] <= k and jumps[_k][1] <= max_dn
+                ),
+                -1,
+            )
             if max_jump >= 0:
                 diff, dn, _kk = jumps[max_jump]
                 # since the difference between jumps is cached, add c
@@ -74,10 +80,6 @@ def next_term(a_i, k, i, n):
 
         else:
             sub_memo[c] = []
-    else:
-        sub_memo = {c: []}
-        memo[ds_b] = sub_memo
-
     if dn >= max_dn or c + diff >= base[k]:
         return diff, dn
 
@@ -194,10 +196,7 @@ def solution(n):
         if dn == n - i:
             break
 
-    a_n = 0
-    for j in range(len(digits)):
-        a_n += digits[j] * 10 ** j
-    return a_n
+    return sum(digits[j] * 10 ** j for j in range(len(digits)))
 
 
 if __name__ == "__main__":

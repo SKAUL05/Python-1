@@ -20,4 +20,4 @@ if __name__ == "__main__":
     examples = ["((()))", "((())", "(()))"]
     print("Balanced parentheses demonstration:\n")
     for example in examples:
-        print(example + ": " + str(balanced_parentheses(example)))
+        print(f"{example}: {str(balanced_parentheses(example))}")

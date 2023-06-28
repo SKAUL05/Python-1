@@ -36,7 +36,7 @@ def solution(n: int) -> int:
     TypeError: Parameter n must be int or passive of cast to int.
     """
     try:
-        n = int(n)
+        n = n
     except (TypeError, ValueError):
         raise TypeError("Parameter n must be int or passive of cast to int.")
     if n <= 0:
@@ -50,7 +50,7 @@ def solution(n: int) -> int:
             i += 1
         ans = i
         while n % i == 0:
-            n = n / i
+            n /= i
         i += 1
 
     return int(ans)

@@ -22,13 +22,7 @@ def palindromic_string(input_string):
     """
     max_length = 0
 
-    # if input_string is "aba" than new_input_string become "a|b|a"
-    new_input_string = ""
-    output_string = ""
-
-    # append each character + "|" in new_string for range(0, length-1)
-    for i in input_string[: len(input_string) - 1]:
-        new_input_string += i + "|"
+    new_input_string = "".join(f"{i}|" for i in input_string[:-1])
     # append last character
     new_input_string += input_string[-1]
 
@@ -43,12 +37,11 @@ def palindromic_string(input_string):
             max_length = length
             start = i
 
-    # create that string
-    for i in new_input_string[start - max_length : start + max_length + 1]:
-        if i != "|":
-            output_string += i
-
-    return output_string
+    return "".join(
+        i
+        for i in new_input_string[start - max_length : start + max_length + 1]
+        if i != "|"
+    )
 
 
 if __name__ == "__main__":

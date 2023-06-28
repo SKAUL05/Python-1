@@ -18,10 +18,7 @@ def OddEvenTransposition(arr):
 
 # creates a list and sorts it
 def main():
-    list = []
-
-    for i in range(10, 0, -1):
-        list.append(i)
+    list = list(range(10, 0, -1))
     print("Initial List")
     print(*list)
 

@@ -30,9 +30,7 @@ def mae(predict, actual):
     actual = np.array(actual)
 
     difference = abs(predict - actual)
-    score = difference.mean()
-
-    return score
+    return difference.mean()
 
 
 # Mean Squared Error
@@ -53,8 +51,7 @@ def mse(predict, actual):
     difference = predict - actual
     square_diff = np.square(difference)
 
-    score = square_diff.mean()
-    return score
+    return square_diff.mean()
 
 
 # Root Mean Squared Error
@@ -75,8 +72,7 @@ def rmse(predict, actual):
     difference = predict - actual
     square_diff = np.square(difference)
     mean_square_diff = square_diff.mean()
-    score = np.sqrt(mean_square_diff)
-    return score
+    return np.sqrt(mean_square_diff)
 
 
 # Root Mean Square Logarithmic Error
@@ -101,9 +97,7 @@ def rmsle(predict, actual):
     square_diff = np.square(difference)
     mean_square_diff = square_diff.mean()
 
-    score = np.sqrt(mean_square_diff)
-
-    return score
+    return np.sqrt(mean_square_diff)
 
 
 # Mean Bias Deviation
@@ -130,7 +124,4 @@ def mbd(predict, actual):
     difference = predict - actual
     numerator = np.sum(difference) / len(predict)
     denumerator = np.sum(actual) / len(predict)
-    # print(numerator, denumerator)
-    score = float(numerator) / denumerator * 100
-
-    return score
+    return float(numerator) / denumerator * 100

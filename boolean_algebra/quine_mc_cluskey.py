@@ -13,10 +13,7 @@ def compare_string(string1, string2):
         if l1[i] != l2[i]:
             count += 1
             l1[i] = "_"
-    if count > 1:
-        return -1
-    else:
-        return "".join(l1)
+    return -1 if count > 1 else "".join(l1)
 
 
 def check(binary):
@@ -35,10 +32,8 @@ def check(binary):
                     check1[i] = "*"
                     check1[j] = "*"
                     temp.append(k)
-        for i in range(len(binary)):
-            if check1[i] == "$":
-                pi.append(binary[i])
-        if len(temp) == 0:
+        pi.extend(binary[i] for i in range(len(binary)) if check1[i] == "$")
+        if not temp:
             return pi
         binary = list(set(temp))
 
@@ -51,7 +46,7 @@ def decimal_to_binary(no_of_variable, minterms):
     temp = []
     s = ""
     for m in minterms:
-        for i in range(no_of_variable):
+        for _ in range(no_of_variable):
             s = str(m % 2) + s
             m //= 2
         temp.append(s)
@@ -69,14 +64,8 @@ def is_for_table(string1, string2, count):
         """
     l1 = list(string1)
     l2 = list(string2)
-    count_n = 0
-    for i in range(len(l1)):
-        if l1[i] != l2[i]:
-            count_n += 1
-    if count_n == count:
-        return True
-    else:
-        return False
+    count_n = sum(1 for i in range(len(l1)) if l1[i] != l2[i])
+    return count_n == count
 
 
 def selection(chart, prime_implicants):
@@ -131,7 +120,7 @@ def prime_implicant_chart(prime_implicants, binary):
         >>> prime_implicant_chart(['0.00.01.5'],['0.00.01.5'])
         [[1]]
         """
-    chart = [[0 for x in range(len(binary))] for x in range(len(prime_implicants))]
+    chart = [[0 for _ in range(len(binary))] for _ in range(len(prime_implicants))]
     for i in range(len(prime_implicants)):
         count = prime_implicants[i].count("_")
         for j in range(len(binary)):

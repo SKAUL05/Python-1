@@ -70,15 +70,11 @@ class my_node:
 
 
 def getheight(node):
-    if node is None:
-        return 0
-    return node.getheight()
+    return 0 if node is None else node.getheight()
 
 
 def my_max(a, b):
-    if a > b:
-        return a
-    return b
+    return max(a, b)
 
 
 def leftrotation(node):
@@ -224,11 +220,11 @@ class AVLtree:
         return getheight(self.root)
 
     def insert(self, data):
-        print("insert:" + str(data))
+        print(f"insert:{str(data)}")
         self.root = insert_node(self.root, data)
 
     def del_node(self, data):
-        print("delete:" + str(data))
+        print(f"delete:{str(data)}")
         if self.root is None:
             print("Tree is empty!")
             return

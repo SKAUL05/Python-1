@@ -18,11 +18,10 @@ def median(nums):
     if len(sorted_list) % 2 == 0:
         mid_index_1 = len(sorted_list) // 2
         mid_index_2 = (len(sorted_list) // 2) - 1
-        med = (sorted_list[mid_index_1] + sorted_list[mid_index_2]) / float(2)
+        return (sorted_list[mid_index_1] + sorted_list[mid_index_2]) / float(2)
     else:
         mid_index = (len(sorted_list) - 1) // 2
-        med = sorted_list[mid_index]
-    return med
+        return sorted_list[mid_index]
 
 
 def main():

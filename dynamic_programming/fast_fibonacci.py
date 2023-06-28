@@ -20,16 +20,12 @@ def _fib(n: int):  # noqa: E999 This syntax is Python 3 only
     if n == 0:
         # (F(0), F(1))
         return (0, 1)
-    else:
-        # F(2n) = F(n)[2F(n+1) − F(n)]
-        # F(2n+1) = F(n+1)^2+F(n)^2
-        a, b = _fib(n // 2)
-        c = a * (b * 2 - a)
-        d = a * a + b * b
-        if n % 2 == 0:
-            return (c, d)
-        else:
-            return (d, c + d)
+    # F(2n) = F(n)[2F(n+1) − F(n)]
+    # F(2n+1) = F(n+1)^2+F(n)^2
+    a, b = _fib(n // 2)
+    c = a * (b * 2 - a)
+    d = a * a + b * b
+    return (c, d) if n % 2 == 0 else (d, c + d)
 
 
 if __name__ == "__main__":

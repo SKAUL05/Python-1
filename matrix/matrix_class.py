@@ -159,10 +159,8 @@ class Matrix:
             )
         else:
             return sum(
-                [
-                    self.rows[0][column] * self.cofactors().rows[0][column]
-                    for column in range(self.num_columns)
-                ]
+                self.rows[0][column] * self.cofactors().rows[0][column]
+                for column in range(self.num_columns)
             )
 
     def is_invertable(self):
@@ -251,7 +249,7 @@ class Matrix:
         if position is None:
             self.rows.append(row)
         else:
-            self.rows = self.rows[0:position] + [row] + self.rows[position:]
+            self.rows = self.rows[:position] + [row] + self.rows[position:]
 
     def add_column(self, column, position=None):
         type_error = TypeError(
@@ -270,7 +268,7 @@ class Matrix:
             self.rows = [self.rows[i] + [column[i]] for i in range(self.num_rows)]
         else:
             self.rows = [
-                self.rows[i][0:position] + [column[i]] + self.rows[i][position:]
+                self.rows[i][:position] + [column[i]] + self.rows[i][position:]
                 for i in range(self.num_rows)
             ]
 
@@ -340,13 +338,13 @@ class Matrix:
                 "Only invertable matrices can be raised to a negative power"
             )
         result = self
-        for i in range(other - 1):
+        for _ in range(other - 1):
             result *= self
         return result
 
     @classmethod
     def dot_product(cls, row, column):
-        return sum([row[i] * column[i] for i in range(len(row))])
+        return sum(row[i] * column[i] for i in range(len(row)))
 
 
 if __name__ == "__main__":

@@ -4,12 +4,8 @@ import math
 class Graph:
     def __init__(self, N=0):  # a graph with Node 0,1,...,N-1
         self.N = N
-        self.W = [
-            [math.inf for j in range(0, N)] for i in range(0, N)
-        ]  # adjacency matrix for weight
-        self.dp = [
-            [math.inf for j in range(0, N)] for i in range(0, N)
-        ]  # dp[i][j] stores minimum distance from i to j
+        self.W = [[math.inf for _ in range(0, N)] for _ in range(0, N)]
+        self.dp = [[math.inf for _ in range(0, N)] for _ in range(0, N)]
 
     def addEdge(self, u, v, w):
         self.dp[u][v] = w

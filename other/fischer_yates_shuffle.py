@@ -9,7 +9,7 @@ import random
 
 
 def FYshuffle(LIST):
-    for i in range(len(LIST)):
+    for _ in range(len(LIST)):
         a = random.randint(0, len(LIST) - 1)
         b = random.randint(0, len(LIST) - 1)
         LIST[a], LIST[b] = LIST[b], LIST[a]

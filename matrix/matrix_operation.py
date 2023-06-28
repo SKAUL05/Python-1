@@ -4,29 +4,25 @@ function based version of matrix operations, which are just 2D arrays
 
 
 def add(matrix_a, matrix_b):
-    if _check_not_integer(matrix_a) and _check_not_integer(matrix_b):
-        rows, cols = _verify_matrix_sizes(matrix_a, matrix_b)
-        matrix_c = []
-        for i in range(rows[0]):
-            list_1 = []
-            for j in range(cols[0]):
-                val = matrix_a[i][j] + matrix_b[i][j]
-                list_1.append(val)
-            matrix_c.append(list_1)
-        return matrix_c
+    if not _check_not_integer(matrix_a) or not _check_not_integer(matrix_b):
+        return
+    rows, cols = _verify_matrix_sizes(matrix_a, matrix_b)
+    matrix_c = []
+    for i in range(rows[0]):
+        list_1 = [matrix_a[i][j] + matrix_b[i][j] for j in range(cols[0])]
+        matrix_c.append(list_1)
+    return matrix_c
 
 
 def subtract(matrix_a, matrix_b):
-    if _check_not_integer(matrix_a) and _check_not_integer(matrix_b):
-        rows, cols = _verify_matrix_sizes(matrix_a, matrix_b)
-        matrix_c = []
-        for i in range(rows[0]):
-            list_1 = []
-            for j in range(cols[0]):
-                val = matrix_a[i][j] - matrix_b[i][j]
-                list_1.append(val)
-            matrix_c.append(list_1)
-        return matrix_c
+    if not _check_not_integer(matrix_a) or not _check_not_integer(matrix_b):
+        return
+    rows, cols = _verify_matrix_sizes(matrix_a, matrix_b)
+    matrix_c = []
+    for i in range(rows[0]):
+        list_1 = [matrix_a[i][j] - matrix_b[i][j] for j in range(cols[0])]
+        matrix_c.append(list_1)
+    return matrix_c
 
 
 def scalar_multiply(matrix, n):
@@ -34,24 +30,25 @@ def scalar_multiply(matrix, n):
 
 
 def multiply(matrix_a, matrix_b):
-    if _check_not_integer(matrix_a) and _check_not_integer(matrix_b):
-        matrix_c = []
-        rows, cols = _verify_matrix_sizes(matrix_a, matrix_b)
+    if not _check_not_integer(matrix_a) or not _check_not_integer(matrix_b):
+        return
+    rows, cols = _verify_matrix_sizes(matrix_a, matrix_b)
 
-        if cols[0] != rows[1]:
-            raise ValueError(
-                f"Cannot multiply matrix of dimensions ({rows[0]},{cols[0]}) "
-                f"and ({rows[1]},{cols[1]})"
-            )
-        for i in range(rows[0]):
-            list_1 = []
-            for j in range(cols[1]):
-                val = 0
-                for k in range(cols[1]):
-                    val = val + matrix_a[i][k] * matrix_b[k][j]
-                list_1.append(val)
-            matrix_c.append(list_1)
-        return matrix_c
+    if cols[0] != rows[1]:
+        raise ValueError(
+            f"Cannot multiply matrix of dimensions ({rows[0]},{cols[0]}) "
+            f"and ({rows[1]},{cols[1]})"
+        )
+    matrix_c = []
+    for i in range(rows[0]):
+        list_1 = []
+        for j in range(cols[1]):
+            val = 0
+            for k in range(cols[1]):
+                val = val + matrix_a[i][k] * matrix_b[k][j]
+            list_1.append(val)
+        matrix_c.append(list_1)
+    return matrix_c
 
 
 def identity(n):
@@ -78,18 +75,17 @@ def transpose(matrix, return_map=True):
 
 def minor(matrix, row, column):
     minor = matrix[:row] + matrix[row + 1 :]
-    minor = [row[:column] + row[column + 1 :] for row in minor]
-    return minor
+    return [row[:column] + row[column + 1 :] for row in minor]
 
 
 def determinant(matrix):
     if len(matrix) == 1:
         return matrix[0][0]
 
-    res = 0
-    for x in range(len(matrix)):
-        res += matrix[0][x] * determinant(minor(matrix, 0, x)) * (-1) ** x
-    return res
+    return sum(
+        matrix[0][x] * determinant(minor(matrix, 0, x)) * (-1) ** x
+        for x in range(len(matrix))
+    )
 
 
 def inverse(matrix):
@@ -120,7 +116,7 @@ def _check_not_integer(matrix):
 
 
 def _shape(matrix):
-    return list((len(matrix), len(matrix[0])))
+    return [len(matrix), len(matrix[0])]
 
 
 def _verify_matrix_sizes(matrix_a, matrix_b):

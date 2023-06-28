@@ -16,12 +16,10 @@ class Onepad:
 
     def decrypt(self, cipher, key):
         """Function to decrypt text using psedo-random numbers."""
-        plain = []
-        for i in range(len(key)):
-            p = int((cipher[i] - (key[i]) ** 2) / key[i])
-            plain.append(chr(p))
-        plain = "".join([i for i in plain])
-        return plain
+        plain = [
+            chr(int((cipher[i] - (key[i]) ** 2) / key[i])) for i in range(len(key))
+        ]
+        return "".join(list(plain))
 
 
 if __name__ == "__main__":

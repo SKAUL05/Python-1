@@ -23,9 +23,8 @@ def decrypt(input_string: str, key: int) -> str:
 
 
 def brute_force(input_string: str) -> None:
-    key = 1
     result = ""
-    while key <= 94:
+    for key in range(1, 95):
         for x in input_string:
             indx = (ord(x) - key) % 256
             if indx < 32:
@@ -33,7 +32,6 @@ def brute_force(input_string: str) -> None:
             result = result + chr(indx)
         print(f"Key: {key}\t| Message: {result}")
         result = ""
-        key += 1
     return None
 
 

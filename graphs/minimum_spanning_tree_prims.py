@@ -15,35 +15,31 @@ def PrimsAlgorithm(l):
     def topToBottom(heap, start, size, positions):
         if start > size // 2 - 1:
             return
+        if 2 * start + 2 >= size:
+            m = 2 * start + 1
         else:
-            if 2 * start + 2 >= size:
-                m = 2 * start + 1
-            else:
-                if heap[2 * start + 1] < heap[2 * start + 2]:
-                    m = 2 * start + 1
-                else:
-                    m = 2 * start + 2
-            if heap[m] < heap[start]:
-                temp, temp1 = heap[m], positions[m]
-                heap[m], positions[m] = heap[start], positions[start]
-                heap[start], positions[start] = temp, temp1
+            m = (
+                2 * start + 1
+                if heap[2 * start + 1] < heap[2 * start + 2]
+                else 2 * start + 2
+            )
+        if heap[m] < heap[start]:
+            temp, temp1 = heap[m], positions[m]
+            heap[m], positions[m] = heap[start], positions[start]
+            heap[start], positions[start] = temp, temp1
 
-                temp = getPosition(positions[m])
-                setPosition(positions[m], getPosition(positions[start]))
-                setPosition(positions[start], temp)
+            temp = getPosition(positions[m])
+            setPosition(positions[m], getPosition(positions[start]))
+            setPosition(positions[start], temp)
 
-                topToBottom(heap, m, size, positions)
+            topToBottom(heap, m, size, positions)
 
     # Update function if value of any node in min-heap decreases
     def bottomToTop(val, index, heap, position):
         temp = position[index]
 
         while index != 0:
-            if index % 2 == 0:
-                parent = int((index - 2) / 2)
-            else:
-                parent = int((index - 1) / 2)
-
+            parent = int((index - 2) / 2) if index % 2 == 0 else int((index - 1) / 2)
             if val < heap[parent]:
                 heap[index] = heap[parent]
                 position[index] = position[parent]
@@ -108,7 +104,7 @@ if __name__ == "__main__":
     n = int(input("Enter number of vertices: ").strip())
     e = int(input("Enter number of edges: ").strip())
     adjlist = defaultdict(list)
-    for x in range(e):
+    for _ in range(e):
         l = [int(x) for x in input().strip().split()]
         adjlist[l[0]].append([l[1], l[2]])
         adjlist[l[1]].append([l[0], l[2]])

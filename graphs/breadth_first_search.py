@@ -26,13 +26,9 @@ class Graph:
         # Take a list for stoting already visited vertexes
         visited = [False] * len(self.vertex)
 
-        # create a list to store all the vertexes for BFS
-        queue = []
-
         # mark the source node as visited and enqueue it
         visited[startVertex] = True
-        queue.append(startVertex)
-
+        queue = [startVertex]
         while queue:
             startVertex = queue.pop(0)
             print(startVertex, end=" ")

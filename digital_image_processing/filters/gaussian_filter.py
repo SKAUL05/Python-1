@@ -8,8 +8,11 @@ from numpy import pi, mgrid, exp, square, zeros, ravel, dot, uint8
 def gen_gaussian_kernel(k_size, sigma):
     center = k_size // 2
     x, y = mgrid[0 - center : k_size - center, 0 - center : k_size - center]
-    g = 1 / (2 * pi * sigma) * exp(-(square(x) + square(y)) / (2 * square(sigma)))
-    return g
+    return (
+        1
+        / (2 * pi * sigma)
+        * exp(-(square(x) + square(y)) / (2 * square(sigma)))
+    )
 
 
 def gaussian_filter(image, k_size, sigma):
@@ -31,10 +34,11 @@ def gaussian_filter(image, k_size, sigma):
     gaussian_kernel = gen_gaussian_kernel(k_size, sigma)
     filter_array = ravel(gaussian_kernel)
 
-    # reshape and get the dst image
-    dst = dot(image_array, filter_array).reshape(dst_height, dst_width).astype(uint8)
-
-    return dst
+    return (
+        dot(image_array, filter_array)
+        .reshape(dst_height, dst_width)
+        .astype(uint8)
+    )
 
 
 if __name__ == "__main__":

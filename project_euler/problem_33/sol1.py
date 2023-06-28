@@ -43,12 +43,11 @@ def solve(digit_len: int) -> str:
         while den <= 99:
             if (num != den) and (num % 10 == den // 10) and (den % 10 != 0):
                 if isDigitCancelling(num, den):
-                    solutions.append("{}/{}".format(num, den))
+                    solutions.append(f"{num}/{den}")
             den += 1
         num += 1
         den = 10
-    solutions = " , ".join(solutions)
-    return solutions
+    return " , ".join(solutions)
 
 
 if __name__ == "__main__":

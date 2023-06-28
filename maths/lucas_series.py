@@ -10,9 +10,7 @@ def recur_luc(n):
     """
     if n == 1:
         return n
-    if n == 0:
-        return 2
-    return recur_luc(n - 1) + recur_luc(n - 2)
+    return 2 if n == 0 else recur_luc(n - 1) + recur_luc(n - 2)
 
 
 if __name__ == "__main__":

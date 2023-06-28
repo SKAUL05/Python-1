@@ -8,11 +8,7 @@ def remove_duplicates(sentence: str) -> str:
     'Java Python also and great is'
     """
     sen_list = sentence.split(" ")
-    check = set()
-
-    for a_word in sen_list:
-        check.add(a_word)
-
+    check = set(sen_list)
     return " ".join(sorted(check))
 
 

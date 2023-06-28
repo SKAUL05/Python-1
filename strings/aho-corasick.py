@@ -3,20 +3,20 @@ from collections import deque
 
 class Automaton:
     def __init__(self, keywords):
-        self.adlist = list()
-        self.adlist.append(
-            {"value": "", "next_states": [], "fail_state": 0, "output": []}
-        )
-
+        self.adlist = [{"value": "", "next_states": [], "fail_state": 0, "output": []}]
         for keyword in keywords:
             self.add_keyword(keyword)
         self.set_fail_transitions()
 
     def find_next_state(self, current_state, char):
-        for state in self.adlist[current_state]["next_states"]:
-            if char == self.adlist[state]["value"]:
-                return state
-        return None
+        return next(
+            (
+                state
+                for state in self.adlist[current_state]["next_states"]
+                if char == self.adlist[state]["value"]
+            ),
+            None,
+        )
 
     def add_keyword(self, keyword):
         current_state = 0
@@ -47,7 +47,8 @@ class Automaton:
                 q.append(child)
                 state = self.adlist[r]["fail_state"]
                 while (
-                    self.find_next_state(state, self.adlist[child]["value"]) == None
+                    self.find_next_state(state, self.adlist[child]["value"])
+                    is None
                     and state != 0
                 ):
                     state = self.adlist[state]["fail_state"]
@@ -67,7 +68,7 @@ class Automaton:
         >>> A.search_in("whatever, err ... , wherever")
         {'what': [0], 'hat': [1], 'ver': [5, 25], 'er': [6, 10, 22, 26]}
         """
-        result = dict()  # returns a dict with keywords and list of its occurences
+        result = {}
         current_state = 0
         for i in range(len(string)):
             while (
@@ -80,7 +81,7 @@ class Automaton:
                 current_state = 0
             else:
                 for key in self.adlist[current_state]["output"]:
-                    if not (key in result):
+                    if key not in result:
                         result[key] = []
                     result[key].append((i - len(key) + 1))
         return result

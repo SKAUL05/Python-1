@@ -15,8 +15,7 @@ def encode_base64(text):
     p = "=" * c  # the padding
     s = byte_text + b"\x00" * c  # the text to encode
 
-    i = 0
-    while i < len(s):
+    for i in range(0, len(s), 3):
         if i > 0 and ((i / 3 * 4) % 76) == 0:
             r = r + "\r\n"  # for unix newline, put "\n"
 
@@ -28,9 +27,7 @@ def encode_base64(text):
         n4 = n & 63
 
         r += base64_chars[n1] + base64_chars[n2] + base64_chars[n3] + base64_chars[n4]
-        i += 3
-
-    return r[0 : len(r) - len(p)] + p
+    return r[:len(r) - len(p)] + p
 
 
 def decode_base64(text):
@@ -49,22 +46,19 @@ def decode_base64(text):
         if i in base64_chars:
             s += i
             c = ""
-        else:
-            if i == "=":
-                c += "="
+        elif i == "=":
+            c += "="
 
     p = ""
     if c == "=":
         p = "A"
-    else:
-        if c == "==":
-            p = "AA"
+    elif c == "==":
+        p = "AA"
 
     r = b""
     s = s + p
 
-    i = 0
-    while i < len(s):
+    for i in range(0, len(s), 4):
         n = (
             (base64_chars.index(s[i]) << 18)
             + (base64_chars.index(s[i + 1]) << 12)
@@ -74,9 +68,7 @@ def decode_base64(text):
 
         r += bytes([(n >> 16) & 255]) + bytes([(n >> 8) & 255]) + bytes([n & 255])
 
-        i += 4
-
-    return str(r[0 : len(r) - len(p)], "utf-8")
+    return str(r[:len(r) - len(p)], "utf-8")
 
 
 def main():

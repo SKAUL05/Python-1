@@ -34,13 +34,11 @@ def checkKeys(keyA, keyB, mode):
         )
     if keyA < 0 or keyB < 0 or keyB > len(SYMBOLS) - 1:
         sys.exit(
-            "Key A must be greater than 0 and key B must be between 0 and %s."
-            % (len(SYMBOLS) - 1)
+            f"Key A must be greater than 0 and key B must be between 0 and {len(SYMBOLS) - 1}."
         )
     if cryptoMath.gcd(keyA, len(SYMBOLS)) != 1:
         sys.exit(
-            "Key A %s and the symbol set size %s are not relatively prime. Choose a different key."
-            % (keyA, len(SYMBOLS))
+            f"Key A {keyA} and the symbol set size {len(SYMBOLS)} are not relatively prime. Choose a different key."
         )
 
 

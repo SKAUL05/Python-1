@@ -49,8 +49,7 @@ class Point:
                 x, y = float(x), float(y)
             except ValueError as e:
                 e.args = (
-                    "x and y must be both numeric types "
-                    "but got {}, {} instead".format(type(x), type(y)),
+                    f"x and y must be both numeric types but got {type(x)}, {type(y)} instead",
                 )
                 raise
 
@@ -88,7 +87,7 @@ class Point:
         return False
 
     def __repr__(self):
-        return "({}, {})".format(self.x, self.y)
+        return f"({self.x}, {self.y})"
 
     def __hash__(self):
         return hash(self.x)
@@ -136,8 +135,7 @@ def _construct_points(list_of_tuples):
                 points.append(Point(p[0], p[1]))
             except (IndexError, TypeError):
                 print(
-                    "Ignoring deformed point {}. All points"
-                    " must have at least 2 coordinates.".format(p)
+                    f"Ignoring deformed point {p}. All points must have at least 2 coordinates."
                 )
     return points
 
@@ -184,7 +182,7 @@ def _validate_input(points):
     """
 
     if not points:
-        raise ValueError("Expecting a list of points but got {}".format(points))
+        raise ValueError(f"Expecting a list of points but got {points}")
 
     if isinstance(points, set):
         points = list(points)
@@ -195,13 +193,11 @@ def _validate_input(points):
                 points = _construct_points(points)
             else:
                 raise ValueError(
-                    "Expecting an iterable of type Point, list or tuple. "
-                    "Found objects of type {} instead".format(type(points[0]))
+                    f"Expecting an iterable of type Point, list or tuple. Found objects of type {type(points[0])} instead"
                 )
         elif not hasattr(points, "__iter__"):
             raise ValueError(
-                "Expecting an iterable object "
-                "but got an non-iterable type {}".format(points)
+                f"Expecting an iterable object but got an non-iterable type {points}"
             )
     except TypeError as e:
         print("Expecting an iterable of type Point, list or tuple.")
@@ -241,8 +237,9 @@ def _det(a, b, c):
     -100
     """
 
-    det = (a.x * b.y + b.x * c.y + c.x * a.y) - (a.y * b.x + b.y * c.x + c.y * a.x)
-    return det
+    return (a.x * b.y + b.x * c.y + c.x * a.y) - (
+        a.y * b.x + b.y * c.x + c.y * a.x
+    )
 
 
 def convex_hull_bf(points):
@@ -290,21 +287,16 @@ def convex_hull_bf(points):
             points_left_of_ij = points_right_of_ij = False
             ij_part_of_convex_hull = True
             for k in range(n):
-                if k != i and k != j:
+                if k not in [i, j]:
                     det_k = _det(points[i], points[j], points[k])
 
                     if det_k > 0:
                         points_left_of_ij = True
                     elif det_k < 0:
                         points_right_of_ij = True
-                    else:
-                        # point[i], point[j], point[k] all lie on a straight line
-                        # if point[k] is to the left of point[i] or it's to the
-                        # right of point[j], then point[i], point[j] cannot be
-                        # part of the convex hull of A
-                        if points[k] < points[i] or points[k] > points[j]:
-                            ij_part_of_convex_hull = False
-                            break
+                    elif points[k] < points[i] or points[k] > points[j]:
+                        ij_part_of_convex_hull = False
+                        break
 
                 if points_left_of_ij and points_right_of_ij:
                     ij_part_of_convex_hull = False

@@ -1,7 +1,7 @@
 import statistics
 
 
-def mode(input_list):  # Defining function "mode."
+def mode(input_list):    # Defining function "mode."
     """This function returns the mode(Mode as in the measures of
     central tendency) of the input data.
 
@@ -16,7 +16,7 @@ def mode(input_list):  # Defining function "mode."
     """
     # Copying inputlist to check with the index number later.
     check_list = input_list.copy()
-    result = list()  # Empty list to store the counts of elements in input_list
+    result = []
     for x in input_list:
         result.append(input_list.count(x))
         input_list.remove(x)

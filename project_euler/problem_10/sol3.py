@@ -37,7 +37,7 @@ def prime_sum(n: int) -> int:
     ...
     TypeError: can only concatenate str (not "int") to str
     """
-    list_ = [0 for i in range(n + 1)]
+    list_ = [0 for _ in range(n + 1)]
     list_[0] = 1
     list_[1] = 1
 
@@ -45,11 +45,7 @@ def prime_sum(n: int) -> int:
         if list_[i] == 0:
             for j in range(i * i, n + 1, i):
                 list_[j] = 1
-    s = 0
-    for i in range(n):
-        if list_[i] == 0:
-            s += i
-    return s
+    return sum(i for i in range(n) if list_[i] == 0)
 
 
 if __name__ == "__main__":

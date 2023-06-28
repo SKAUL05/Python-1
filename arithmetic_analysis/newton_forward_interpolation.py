@@ -20,9 +20,7 @@ def ucal(u, p):
 
 def main():
     n = int(input("enter the numbers of values"))
-    y = []
-    for i in range(n):
-        y.append([])
+    y = [[] for _ in range(n)]
     for i in range(n):
         for j in range(n):
             y[i].append(j)
@@ -48,7 +46,7 @@ def main():
     for i in range(1, n):
         summ += (ucal(u, i) * y[0][i]) / math.factorial(i)
 
-    print("the value at {} is {}".format(value, summ))
+    print(f"the value at {value} is {summ}")
 
 
 if __name__ == "__main__":

@@ -61,7 +61,6 @@ def prim(graph, root):
     Return a list with the edges of a Minimum Spanning Tree
     prim(graph, graph[0])
     """
-    A = []
     for u in graph:
         u.key = math.inf
         u.pi = None
@@ -74,6 +73,4 @@ def prim(graph, root):
             if (v in Q) and (u.edges[v.id] < v.key):
                 v.pi = u
                 v.key = u.edges[v.id]
-    for i in range(1, len(graph)):
-        A.append([graph[i].id, graph[i].pi.id])
-    return A
+    return [[graph[i].id, graph[i].pi.id] for i in range(1, len(graph))]

@@ -45,20 +45,17 @@ def TFKMeansCluster(vectors, noofclusters):
         ##These nodes will assign the centroid Variables the appropriate
         ##values
         centroid_value = tf.placeholder("float64", [dim])
-        cent_assigns = []
-        for centroid in centroids:
-            cent_assigns.append(tf.assign(centroid, centroid_value))
-
+        cent_assigns = [tf.assign(centroid, centroid_value) for centroid in centroids]
         ##Variables for cluster assignments of individual vectors(initialized
         ##to 0 at first)
-        assignments = [tf.Variable(0) for i in range(len(vectors))]
+        assignments = [tf.Variable(0) for _ in range(len(vectors))]
         ##These nodes will assign an assignment Variable the appropriate
         ##value
         assignment_value = tf.placeholder("int32")
-        cluster_assigns = []
-        for assignment in assignments:
-            cluster_assigns.append(tf.assign(assignment, assignment_value))
-
+        cluster_assigns = [
+            tf.assign(assignment, assignment_value)
+            for assignment in assignments
+        ]
         ##Now lets construct the node that will compute the mean
         # The placeholder for the input
         mean_input = tf.placeholder("float", [None, dim])
@@ -95,8 +92,7 @@ def TFKMeansCluster(vectors, noofclusters):
         # iterations. To keep things simple, we will only do a set number of
         # iterations, instead of using a Stopping Criterion.
         noofiterations = 100
-        for iteration_n in range(noofiterations):
-
+        for _ in range(noofiterations):
             ##EXPECTATION STEP
             ##Based on the centroid locations till last iteration, compute
             ##the _expected_ centroid assignments.

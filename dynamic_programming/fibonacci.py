@@ -10,8 +10,10 @@ class Fibonacci:
             N = int(N)
             self.fib_array.append(0)
             self.fib_array.append(1)
-            for i in range(2, N + 1):
-                self.fib_array.append(self.fib_array[i - 1] + self.fib_array[i - 2])
+            self.fib_array.extend(
+                self.fib_array[i - 1] + self.fib_array[i - 2]
+                for i in range(2, N + 1)
+            )
         elif N == 0:
             self.fib_array.append(0)
         print(self.fib_array)
@@ -28,13 +30,13 @@ class Fibonacci:
         [0, 1, 1, 2, 3, 5]
         []
         """
-        if sequence_no != None:
-            if sequence_no < len(self.fib_array):
-                return print(self.fib_array[: sequence_no + 1])
-            else:
-                print("Out of bound.")
-        else:
+        if sequence_no is None:
             print("Please specify a value")
+
+        elif sequence_no < len(self.fib_array):
+            return print(self.fib_array[: sequence_no + 1])
+        else:
+            print("Out of bound.")
 
 
 if __name__ == "__main__":
